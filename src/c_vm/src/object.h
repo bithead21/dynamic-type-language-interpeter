@@ -14,17 +14,18 @@ typedef enum ObjType {
     OBJ_UPVALUE
 } ObjType;
 
-struct Obj {
+typedef struct Obj {
     ObjType type;
     struct Obj* next;
-};
+    bool is_gc_marked;
+} Obj;
 
-struct ObjString {
+typedef struct  ObjString {
     Obj obj;
     int length;
     char* chars;
     uint32_t hash;
-};
+} ObjString;
 
 typedef struct {
     Obj obj;

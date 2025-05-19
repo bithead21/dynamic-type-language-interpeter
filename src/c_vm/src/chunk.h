@@ -49,7 +49,7 @@ typedef enum {
     OP_CLOSE_UPVALUE,
 } OP_CODE;
 
-typedef struct {
+typedef struct Chunk {
     int count;
     int capacity;
     int* lines;

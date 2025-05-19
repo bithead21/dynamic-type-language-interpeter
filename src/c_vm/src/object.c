@@ -14,16 +14,26 @@ void free_upvalues(ObjClosure* closure) {
 }
 
 Obj* allocate_obj(size_t size, ObjType type) {
+
     Obj* t = malloc(size);
     t->type = type;
-
+    t->is_gc_marked = false;
     t->next = vm.objects;
     vm.objects = t;
+
+    #ifdef DEBUG_LOG_GC
+    printf("[gc] %p allocate %zu for %d\n", (void*)t, size, type);
+    #endif
 
     return t;
 };
 
 void freeObj(Obj* t) {
+
+    #ifdef DEBUG_LOG_GC
+    printf("[gc] %p free obj %d\n", (void*)t, t->type);
+    #endif
+
     switch (t->type)
     {
     case OBJ_STRING:

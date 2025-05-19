@@ -31,4 +31,13 @@ bool hashtable_delete(Hashtable* t, ObjString* key);
 
 ObjString* hashtable_find_string(Hashtable* t, const char* chars, int length, uint32_t hash);
 
+void gc_table_remove_white(Hashtable* table) {
+    for (int i = 0; i < table->capacity; i++) {
+        Entry* entry = &table->entries[i];
+        if (entry->key != NULL && !entry->key->obj.is_gc_marked) {
+            hashtable_delete(table, entry->key);
+        }
+    }
+};
+
 #endif

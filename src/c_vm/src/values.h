@@ -3,25 +3,33 @@
 
 #include "common.h"
 #include "memory.h"
+#include "object.h"
 
-typedef enum {
+
+typedef enum  ValueType {
     VALUE_BOOL,
     VALUE_NUMBER,
     VALUE_NULL,
     VALUE_OBJ,
 } ValueType;
 
-typedef struct Obj Obj;
+//typedef struct Obj Obj;
 typedef struct ObjString ObjString;
 
-typedef struct {
+typedef struct Value {
     ValueType type;
     union {
         double number;
         bool boolean;
-        Obj* obj;
+        struct Obj* obj;
     } as;
 } Value;
+
+typedef struct ValueArray {
+    int count;
+    int capacity;
+    Value* values;
+} ValueArray;
 
 #define IS_BOOL(value) ((value).type == VALUE_BOOL)
 #define IS_NUMBER(value) ((value).type == VALUE_NUMBER)
@@ -42,12 +50,6 @@ typedef struct {
 #define AS_FUNCTION(value) ((ObjFunction*)AS_OBJ(value))
 #define AS_NATIVE(value) (((ObjNative*)AS_OBJ(value))->function)
 #define AS_CLOSURE(value) ((ObjClosure*)AS_OBJ(value))
-
-typedef struct {
-    int count;
-    int capacity;
-    Value* values;
-} ValueArray;
 
 ValueArray* valueArray_alloc();
 

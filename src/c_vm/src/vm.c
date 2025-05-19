@@ -113,7 +113,7 @@ static bool vm_call_func(Obj* callee, ObjFunction* function, int argCount) {
   CallFrame* frame = &vm.frames[vm.frames_count++];
   frame->function = (Obj*)callee;
   frame->ip = function->chunk.code;
-
+  frame->closure = NULL;
   frame->slots = vm.stack_top - argCount - 1;
   return true;
 }
@@ -500,6 +500,10 @@ void vm_init() {
 
     // add globals
     vm_add_natives();
+
+    vm.gray_count = 0;
+    vm.gray_capacity = 0;
+    vm.gray_stack = NULL;
 };
 
 
@@ -514,4 +518,6 @@ void vm_destroy() {
     destroy_hashtable(&vm.strings);
     destroy_hashtable(&vm.globals);
     //FREE(Hashtable, vm.strings);
+    free(vm.gray_stack);
+    
 };

@@ -17,7 +17,7 @@ typedef enum {
 
 typedef struct {
     Obj* function;
-    //ObjClosure* closure;
+    ObjClosure* closure;
     //ObjFunction* function;
     uint8_t* ip;
     Value* slots; // stack
@@ -37,6 +37,11 @@ typedef struct {
     Hashtable globals;
     // ----- upvalues ---
     ObjUpvalue* open_upvalues;
+
+    // gray stack for gc
+    int gray_count;
+    int gray_capacity;
+    Obj** gray_stack;
 } VM;
 
 extern VM vm;

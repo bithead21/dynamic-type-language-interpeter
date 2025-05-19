@@ -2,6 +2,11 @@
 #define CVM_MEMORY_H
 
 #include "stdlib.h"
+#include <stdio.h>
+#include "debug.h"
+#include "object.h"
+#include "vm.h"
+#include "compiler.h"
 
 
 void* realloc_ptr(void* old_ptr, size_t old_size, size_t new_size) ;
@@ -22,6 +27,10 @@ void* realloc_ptr(void* old_ptr, size_t old_size, size_t new_size) ;
 
 
 #define FREE(type, ptr) MEM_FREE(type, ptr, 1)
+
+void mark_value(Value v);
+void mark_object(Obj* object);
+void collect_garbage();
 
 /*
     malloc

@@ -6,5 +6,7 @@
 
 void disassembleChunk(Chunk* chunk, const char* name);
 int disassembleInstruction(Chunk* chunk, int offset);
+void print_object(Value v);
+void print_value(Value v);
 
 #endif

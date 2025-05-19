@@ -1095,3 +1095,10 @@ void compiler_init(Compiler* comp, FunctionType type) {
     local->is_captured = false;
 };
 
+void gc_mark_compiler_roots() {
+    Compiler* c = current_comp;
+    while(c != NULL) {
+        mark_object((Obj*)c->function);
+        c = c->enclosing;
+    }
+}

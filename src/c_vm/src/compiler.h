@@ -14,5 +14,6 @@
 #include "vm.h"
 
 ObjFunction* compile(const char* source);
+void gc_mark_compiler_roots();
 
 #endif
