@@ -62,6 +62,9 @@ interpret исполнение на ВМ кода.
 
 vars based on hashtable<langType>
 
+closures + upvalues.
+closed upvalues.
+
 goals:
 Pratt parsing alg with precedences + mod assigment;
 control flow: ip jumps.
